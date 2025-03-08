@@ -6,11 +6,12 @@ const userMessage = ref("");
 const responseText = ref("");
 const isLoading = ref(false);
 let session = null;
-const capabilities = await chrome.aiOriginTrial.languageModel.capabilities();
-console.log(capabilities);
+
 const startSession = async () => {
   if (!systemPrompt.value) return alert("Please enter a system prompt!");
   try {
+    const capabilities = await chrome.aiOriginTrial.languageModel.capabilities();
+    console.log(capabilities);
     session = await chrome.aiOriginTrial.languageModel.create({
       systemPrompt: systemPrompt.value,
       monitor(m) {
