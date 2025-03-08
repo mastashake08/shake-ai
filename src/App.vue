@@ -6,18 +6,23 @@ const userMessage = ref("");
 const responseText = ref("");
 const isLoading = ref(false);
 let session = null;
-
+const capabilities = await chrome.aiOriginTrial.languageModel.capabilities();
+console.log(capabilities);
 const startSession = async () => {
   if (!systemPrompt.value) return alert("Please enter a system prompt!");
-  session = await chrome.aiOriginTrial.languageModel.create({
-    systemPrompt: systemPrompt.value,
-    monitor(m) {
-        m.addEventListener("downloadprogress", (e) => {
-        console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
-        });
-        },
-    });
-};
+  try {
+    session = await chrome.aiOriginTrial.languageModel.create({
+      systemPrompt: systemPrompt.value,
+      monitor(m) {
+          m.addEventListener("downloadprogress", (e) => {
+          console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+          });
+          },
+      });
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 const sendPrompt = async () => {
   if (!session) return alert("Start a session first!");

@@ -2,7 +2,12 @@
     "name": "shake-ai",
     "version": "1.0.0",
     "description": "A Chrome extension using Google Prompt API with Vue 3 & Tailwind CSS.",
-    "author": "Your Name",
+    "author": "Jyrone Parker",
+    "keywords": ["chrome-extension", "vue", "tailwindcss", "vite"],
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/mastashake08/shake-ai.git"
+    },
     "license": "MIT",
     "scripts": {
       "dev": "vite",

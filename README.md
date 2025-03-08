@@ -80,7 +80,7 @@ The extension uses **Manifest V3** and requires **AI permissions**:
   "manifest_version": 3,
   "name": "Shake AI",
   "version": "1.0",
-  "permissions": ["ai"],
+  "permissions": ["aiLanguageModelOriginTrial"],
   "host_permissions": ["https://*/*"],
   "action": {
     "default_popup": "index.html"
