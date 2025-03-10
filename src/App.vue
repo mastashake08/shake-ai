@@ -10,8 +10,6 @@ let session = null;
 const startSession = async () => {
   if (!systemPrompt.value) return alert("Please enter a system prompt!");
   try {
-    const capabilities = await chrome.aiOriginTrial.languageModel.capabilities();
-    responseText.value = `Capabilities: ${capabilities.available == 'yes' ? "Available " : "Not available "}`;
     session = await chrome.aiOriginTrial.languageModel.create({
       systemPrompt: systemPrompt.value,
       monitor(m) {
