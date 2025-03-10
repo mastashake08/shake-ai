@@ -11,17 +11,17 @@ const startSession = async () => {
   if (!systemPrompt.value) return alert("Please enter a system prompt!");
   try {
     const capabilities = await chrome.aiOriginTrial.languageModel.capabilities();
-    console.log(capabilities);
+    responseText.value = `Capabilities: ${capabilities.available == 'yes' ? "Available " : "Not available "}`;
     session = await chrome.aiOriginTrial.languageModel.create({
       systemPrompt: systemPrompt.value,
       monitor(m) {
           m.addEventListener("downloadprogress", (e) => {
-          console.log(`Downloaded ${e.loaded} of ${e.total} bytes.`);
+          responseText.value = (`Downloaded ${e.loaded} of ${e.total} bytes.`);
           });
           },
       });
   } catch (error) {
-    console.log(error)
+    responseText.value += error.message;
   }
 }
 
@@ -33,8 +33,15 @@ const sendPrompt = async () => {
   isLoading.value = true;
 
   const stream = session.promptStreaming(userMessage.value);
+  let previousChunk = '';
+
   for await (const chunk of stream) {
-    responseText.value += chunk;
+    const newChunk = chunk.startsWith(previousChunk)
+        ? chunk.slice(previousChunk.length) : chunk;
+    console.log(newChunk);
+    responseText.value  += newChunk;
+    previousChunk = chunk;
+    
   }
 
   isLoading.value = false;
