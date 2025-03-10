@@ -1,7 +1,10 @@
 {
   "manifest_version": 3,
   "name": "Shake AI",
-  "version": "1.0.8",
+  "version": "1.0.9",
+  "background": {
+    "service_worker": "service-worker.js"
+  },
   "description": "A simple Chrome extension to interact with the Google Prompt API. Create a system prompt and start creating!",
   "permissions": ["aiLanguageModelOriginTrial", "sidePanel"],
   "side_panel": {

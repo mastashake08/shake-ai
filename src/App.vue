@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { marked } from "marked";
 
 const systemPrompt = ref("");
 const userMessage = ref("");
@@ -13,15 +14,15 @@ const startSession = async () => {
     session = await chrome.aiOriginTrial.languageModel.create({
       systemPrompt: systemPrompt.value,
       monitor(m) {
-          m.addEventListener("downloadprogress", (e) => {
-          responseText.value = (`Downloaded ${e.loaded} of ${e.total} bytes.`);
-          });
-          },
-      });
+        m.addEventListener("downloadprogress", (e) => {
+          responseText.value = `Downloaded ${e.loaded} of ${e.total} bytes.`;
+        });
+      },
+    });
   } catch (error) {
     responseText.value += error.message;
   }
-}
+};
 
 const sendPrompt = async () => {
   if (!session) return alert("Start a session first!");
@@ -31,19 +32,23 @@ const sendPrompt = async () => {
   isLoading.value = true;
 
   const stream = session.promptStreaming(userMessage.value);
-  let previousChunk = '';
+  let previousChunk = "";
 
   for await (const chunk of stream) {
     const newChunk = chunk.startsWith(previousChunk)
-        ? chunk.slice(previousChunk.length) : chunk;
+      ? chunk.slice(previousChunk.length)
+      : chunk;
     console.log(newChunk);
-    responseText.value  += newChunk;
+    responseText.value += newChunk;
     previousChunk = chunk;
-    
   }
 
   isLoading.value = false;
 };
+
+const parsedResponseText = computed(() => {
+  return marked(responseText.value);
+});
 </script>
 
 <template>
@@ -77,7 +82,7 @@ const sendPrompt = async () => {
     <!-- AI Response -->
     <div class="w-full max-w-lg mt-6 mb-4 p-4 bg-gray-800 rounded border border-gray-700">
       <p class="text-lg font-semibold">Response:</p>
-      <div class="response-text mt-2 mb-2 text-gray-300 whitespace-pre-line">{{ responseText || "Waiting for response..." }}</div>
+      <div class="response-text mt-2 mb-2 text-gray-300 whitespace-pre-line" v-html="parsedResponseText"></div>
       <div v-if="isLoading" class="mt-2 text-yellow-400">Loading...</div>
     </div>
   </div>
@@ -86,7 +91,7 @@ const sendPrompt = async () => {
 <style>
 /* Tailwind will handle most of the styling */
 .response-text {
-  max-height: auto; /* Adjusted height for better fit in popup */
-  overflow-y: auto;
+  max-height: 300px; /* Set a fixed height for the response container */
+  overflow-y: auto; /* Ensure the response container is scrollable */
 }
 </style>

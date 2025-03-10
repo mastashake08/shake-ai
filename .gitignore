@@ -12,6 +12,7 @@ dist/
 *.local
 
 # Editor & OS files
+*.zip
 .DS_Store
 Thumbs.db
 .vscode/

@@ -3,25 +3,30 @@
     "version": "1.0.7",
     "description": "A Chrome extension using Google Prompt API with Vue 3 & Tailwind CSS.",
     "author": "Jyrone Parker",
-    "keywords": ["chrome-extension", "vue", "tailwindcss", "vite"],
+    "keywords": [
+        "chrome-extension",
+        "vue",
+        "tailwindcss",
+        "vite"
+    ],
     "repository": {
-      "type": "git",
-      "url": "https://github.com/mastashake08/shake-ai.git"
+        "type": "git",
+        "url": "https://github.com/mastashake08/shake-ai.git"
     },
     "license": "MIT",
     "scripts": {
-      "dev": "vite",
-      "build": "vite build"
+        "dev": "vite",
+        "build": "vite build"
     },
     "dependencies": {
-      "vue": "^3.3.4"
+        "marked": "^15.0.7",
+        "vue": "^3.3.4"
     },
     "devDependencies": {
-      "@vitejs/plugin-vue": "^4.2.0",
-      "vite": "^5.0.0",
-      "tailwindcss": "^3.3.0",
-      "autoprefixer": "^10.4.0",
-      "postcss": "^8.4.0"
+        "@vitejs/plugin-vue": "^4.2.0",
+        "autoprefixer": "^10.4.0",
+        "postcss": "^8.4.0",
+        "tailwindcss": "^3.3.0",
+        "vite": "^5.0.0"
     }
-  }
-  
+}
