@@ -1,6 +1,6 @@
 {
     "name": "shake-ai",
-    "version": "1.0.0",
+    "version": "1.0.7",
     "description": "A Chrome extension using Google Prompt API with Vue 3 & Tailwind CSS.",
     "author": "Jyrone Parker",
     "keywords": ["chrome-extension", "vue", "tailwindcss", "vite"],

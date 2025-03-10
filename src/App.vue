@@ -47,7 +47,7 @@ const sendPrompt = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-6">
+  <div class="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-6 mr-4">
     <h1 class="text-3xl font-bold mb-4">Shake AI 🤖</h1>
 
     <!-- System Prompt Input -->
@@ -75,9 +75,9 @@ const sendPrompt = async () => {
     </div>
 
     <!-- AI Response -->
-    <div class="w-full max-w-lg mt-6 p-4 bg-gray-800 rounded border border-gray-700">
+    <div class="w-full max-w-lg mt-6 mb-4 p-4 bg-gray-800 rounded border border-gray-700">
       <p class="text-lg font-semibold">Response:</p>
-      <p class="mt-2 text-gray-300 whitespace-pre-line">{{ responseText || "Waiting for response..." }}</p>
+      <div class="response-text mt-2 mb-2 text-gray-300 whitespace-pre-line">{{ responseText || "Waiting for response..." }}</div>
       <div v-if="isLoading" class="mt-2 text-yellow-400">Loading...</div>
     </div>
   </div>
@@ -85,4 +85,8 @@ const sendPrompt = async () => {
 
 <style>
 /* Tailwind will handle most of the styling */
+.response-text {
+  max-height: auto; /* Adjusted height for better fit in popup */
+  overflow-y: auto;
+}
 </style>
