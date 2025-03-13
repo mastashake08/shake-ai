@@ -7,7 +7,10 @@ const userMessage = ref("");
 const responseText = ref("");
 const isLoading = ref(false);
 let session = null;
-
+const copyResponse = async () => {
+  await navigator.clipboard.writeText(responseText.value);
+  alert("Response copied to clipboard!");
+};
 const startSession = async () => {
   if (!systemPrompt.value) return alert("Please enter a system prompt!");
   try {
@@ -52,7 +55,7 @@ const parsedResponseText = computed(() => {
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-6 mr-4">
+  <div class="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-6 mr-4 ">
     <h1 class="text-3xl font-bold mb-4">Shake AI 🤖</h1>
 
     <!-- System Prompt Input -->
@@ -80,7 +83,14 @@ const parsedResponseText = computed(() => {
     </div>
 
     <!-- AI Response -->
-    <div class="w-full max-w-lg mt-6 mb-4 p-4 bg-gray-800 rounded border border-gray-700">
+
+    <button 
+      @click="copyResponse"
+      class="mt-6  w-full py-2 bg-red-600 hover:bg-red-500 rounded text-white font-semibold"
+    >
+      Copy
+    </button>
+    <div class="w-full max-w-lg mt-2 mb-4 p-4 bg-gray-800 rounded border border-gray-700">
       <p class="text-lg font-semibold">Response:</p>
       <div class="response-text mt-2 mb-2 text-gray-300 whitespace-pre-line" v-html="parsedResponseText"></div>
       <div v-if="isLoading" class="mt-2 text-yellow-400">Loading...</div>
