@@ -16,6 +16,11 @@ const startSession = async () => {
   try {
     session = await chrome.aiOriginTrial.languageModel.create({
       systemPrompt: systemPrompt.value,
+      expectedInputs: [
+        { type: "audio" },
+        { type: "image" },
+        { type: "text" }
+      ],
       monitor(m) {
         m.addEventListener("downloadprogress", (e) => {
           responseText.value = `Downloaded ${e.loaded} of ${e.total} bytes.`;
